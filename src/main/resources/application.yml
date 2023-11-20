@@ -18,3 +18,4 @@ spring:
       hibernate:
         format_sql: true # sql을 줄바꿈해서 이쁘게 출력
     database: mysql # DB 계열 설정
+
