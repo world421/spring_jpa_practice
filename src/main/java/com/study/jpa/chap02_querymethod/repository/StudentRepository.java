@@ -40,7 +40,7 @@ public interface StudentRepository
     // JPQL : @Query("SELECT s.name FROM Student s WHERE s.city = ?1")
     List<Student> getByCityWithJPQL(String city);
 
-    @Query("SELECT s FROM Student s WHERE s.name Like %:nm%")
+    @Query("SELECT s FROM Student s WHERE s.name Like %:nm%") //
     // JPQL : @Query("SELECT s.name FROM Student s WHERE s.city = ?1")
     List<Student> searchByNameWithJPQL(@Param("nm") String name);
 
