@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.ls.LSException;
 
+import javax.persistence.Id;
 import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -65,11 +66,16 @@ public class PostService {
 
     public PostDetailResponseDTO getDetail(Long id) throws Exception {
 
-        Post postEntity = postRepository.findById(id)
-                                        // 예외만들기, 예외발생하면 실행중지후 throws 발생
-                .orElseThrow(() -> new RuntimeException(id + "번 게시물이 존재하지 않습니다.!"));
+        Post postEntity = getPost(id);
         return new PostDetailResponseDTO(postEntity);
     }
+
+    private Post getPost(Long id) {
+        return postRepository.findById(id)
+                                        // 예외만들기, 예외발생하면 실행중지후 throws 발생
+                .orElseThrow(() -> new RuntimeException(id + "번 게시물이 존재하지 않습니다.!"));
+    }
+
 
 
     public PostDetailResponseDTO insert(PostCreateDTO dto)
@@ -107,5 +113,24 @@ public class PostService {
         
         
         return new PostDetailResponseDTO(saved);
+    }
+
+    public PostDetailResponseDTO modify(PostModifyDTO dto) {
+        // 수정 전 데이터를 조회
+        Post postEntity = getPost(dto.getPostNo());
+
+        // 수정 시작
+        postEntity.setTitle(dto.getTitle());
+        postEntity.setContent(dto.getContent());
+
+        // 수정 완료
+        Post modifiedPost = postRepository.save(postEntity);
+
+
+        return new PostDetailResponseDTO(modifiedPost);
+    }
+
+    public void delete(Long id) throws Exception {
+        postRepository.deleteById(id);
     }
 }

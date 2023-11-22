@@ -21,8 +21,8 @@ public class HashTag {
     private Long id;
 
     private String tagName; // 해시 태그 이름
-
-    @ManyToOne(fetch = FetchType.LAZY)
+                                    // .ALL 모든 변화감지
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_no")
     private  Post post;
 

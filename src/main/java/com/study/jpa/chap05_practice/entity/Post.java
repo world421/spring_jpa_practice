@@ -39,7 +39,9 @@ public class Post {
     @UpdateTimestamp
     private LocalDateTime updateDateTime; //수정시간
 
-    @OneToMany(mappedBy = "post")
+                                //  고아객체가 된 얘는 삭제해도돼
+                                // 양방향일경우 , orphanRemoval = true
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
     @Builder.Default // 특정 필드를 직접 지저한 값으로 초기화 하는 것을 강제 .
     private List<HashTag> hashTags = new ArrayList<>();
 
