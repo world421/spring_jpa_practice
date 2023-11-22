@@ -53,7 +53,7 @@ class DepartmentRepositoryTest {
         Long id = 3L;
 
         //when
-        Employee employee = employeeRepository.findById(id).orElseThrow();
+        Employee employee = employeeRepository.findById(id).orElseThrow(); 
 
         //then
         System.out.println("\n\n\n");
@@ -67,8 +67,10 @@ class DepartmentRepositoryTest {
     void testChangeDept() {
         // 1번 사원의 부서를 1번부서에서 2번 부서로 변경해야 한다.
         //given
+        
+        
         Employee foundEmp = employeeRepository.findById(1L).orElseThrow();
-
+        
         Department newDept = departmentRepository.findById(2L).orElseThrow();
 
         // 2번 -> 사원의 부서 정보를 업데이트 하면서, 부서에 대한 정보도 같이 업데이트.
@@ -79,7 +81,7 @@ class DepartmentRepositoryTest {
         employeeRepository.save(foundEmp);
 
         //1번 -> 변경 감지 (더티 체크) 후 변경된 내용을 즉시 반영하는 역할
-        //entityManager.flush(); // dbㄹ 밀어내기
+        //entityManager.flush(); // DB 밀어내기
         //entityManager.clear(); // 영속성 컨텍스트 비우기 ( 비우지 않으면 컨텍스트 내의 정보를 참조하려함 )
         // =================================
         /*
@@ -105,7 +107,6 @@ class DepartmentRepositoryTest {
     void testNPlus1Ex() {
         //given
         List<Department> departments = departmentRepository.findAll();
-
         //when
         departments.forEach(dept->{
             System.out.println("\n\n ======== 사원리스트 =========");
@@ -114,15 +115,14 @@ class DepartmentRepositoryTest {
 
             System.out.println("\n\n");
         });
-
         //then
     }
 
     @Test
-    @DisplayName("N+1 문제 발생 예시")
+    @DisplayName("N+1 문제 해결 예시")
     void testNPlus1Solution() {
+        //given
         List<Department> departments = departmentRepository.findAllIncludesEmployees();
-
         departments.forEach(dept->{
             System.out.println("\n\n ======== 사원리스트 =========");
             List<Employee> employees = dept.getEmployees();

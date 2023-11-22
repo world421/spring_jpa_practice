@@ -28,6 +28,9 @@ public class Post {
     @Column(nullable = false)
     private String writer; // 작성자
 
+    @Column(nullable = false) // NOT NULL
+    private String title;// 제목
+
     private String content; // 내용
 
     @CreationTimestamp
@@ -36,7 +39,6 @@ public class Post {
 
     @UpdateTimestamp
     private LocalDateTime updateDateTime; //수정시간
-
 
     @OneToMany(mappedBy = "post")
     private List<HashTag> hashTags = new ArrayList<>();

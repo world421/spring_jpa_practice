@@ -26,4 +26,6 @@ public class HashTag {
     @JoinColumn(name = "post_no")
     private  Post post;
 
+
+
 }
